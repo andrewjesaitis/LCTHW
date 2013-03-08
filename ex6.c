@@ -10,8 +10,8 @@ int main(int argc, char *argv[])
 	char last_name[] = "Shaw";
 
 	printf("You are %d miles away.\n", distance);
-	printf("You have %f levels of prower.\n", power);
-	printf("You have %f awesome super powers.\n", super_power);
+	printf("You have %.1f levels of prower.\n", power);
+	printf("You have %.1f awesome super powers.\n", super_power);
 	printf("I have a first name %s.\n", first_name);
 	printf("I have a last name %s.\n", last_name);
 	printf("My whole name is %s %c. %s.", first_name, initial, last_name);
