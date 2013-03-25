@@ -11,10 +11,19 @@ int main(int argc, char *argv[])
 	}
 
 	// let's make our own array of strings
-	char *states[] = {
-		"California", "Oregon",
-		"Washington", "Texas"
-	};
+	// char *states[] = {
+	// 	"California", "Oregon",
+	// 	"Washington", "Texas"
+	// };
+
+	i =0;
+	char *states[4];
+	while (i < argc){
+		if (i < 4){
+			states[i] = argv[i];
+		}
+		i++;
+	}
 
 	int num_states = 4;
 	i = 0; // watch for this
