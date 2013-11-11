@@ -1,5 +1,10 @@
 #include <stdio.h>
 
+void print_name_age(char **name, int *age)
+{
+	printf("%s lived %d years so far.\n", *name, *age);
+}
+
 int main(int argc, char *argv[])
 {
 	// create two arrays
@@ -59,6 +64,14 @@ int main(int argc, char *argv[])
 
 	printf("-----\n");
 
+	printf("BOOM! I'll while loop this shiz.\n");
+
+	while(cur_age < ages + count) {
+		print_name_age(cur_name++, cur_age++);
+	}
+
+	printf("-----\n");
+
 	// fourth way using pointers in a stupid complex way
 	for (cur_name = names, cur_age = ages;
 			(cur_age - ages) < count;
@@ -79,6 +92,8 @@ int main(int argc, char *argv[])
 	printf("-----\n");
 
 	printf("Now print the addresses\n");
+	cur_age = ages;
+	cur_name = names;
 
 	for(i = count - 1 ; i >= 0; i--) {
 		printf("%s is located at %p\t\t%d is located at %p\n", cur_name[i], &cur_name[i], cur_age[i], &cur_age[i]);
