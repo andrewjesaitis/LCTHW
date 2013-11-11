@@ -76,6 +76,14 @@ int main(int argc, char *argv[])
 		printf("%s lived %d years so far.\n", *cur_name, *cur_age);
 	}
 
+	printf("-----\n");
+
+	printf("Now print the addresses\n");
+
+	for(i = count - 1 ; i >= 0; i--) {
+		printf("%s is located at %p\t\t%d is located at %p\n", cur_name[i], &cur_name[i], cur_age[i], &cur_age[i]);
+	}
+
 
 	return 0;
 }
