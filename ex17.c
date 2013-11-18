@@ -150,6 +150,21 @@ void Database_list(struct Connection *conn)
 	}
 }
 
+void Database_find(struct Connection *conn, const char *term)
+{
+	int i =0;
+	struct Database *db = conn->db;
+
+	for(i = 0; i < MAX_ROWS; i++){
+		struct Address *cur = &db->rows[i];
+		int result;
+		result = strncmp(cur->name, term, MAX_DATA);
+		if (cur->set && result == 0) {
+			Address_print(cur);
+		}
+	}
+}
+
 int main(int argc, char *argv[])
 {
 	if (argc < 3) die("USAGE: ex17 <dbfile> <action> [action params]", NULL);
@@ -159,7 +174,7 @@ int main(int argc, char *argv[])
 	struct Connection *conn = Database_open(filename, action);
 	int id = 0;
 
-	if(argc > 3) id = atoi(argv[3]);
+	if(argc > 3 && action != 'f') id = atoi(argv[3]);
 	if(id >= MAX_ROWS) die("There's not that many records.", conn);
 
 	switch(action){
@@ -169,12 +184,10 @@ int main(int argc, char *argv[])
 			break;
 		case 'g':
 			if(argc != 4) die("Need an id to get a record", conn);
-
 			Database_get(conn, id);
 			break;
 		case 's':
 			if(argc != 6) die("Need an id, name, and email to set", conn);
-
 			Database_set(conn, id, argv[4], argv[5]);
 			Database_write(conn);
 			break;
@@ -187,8 +200,11 @@ int main(int argc, char *argv[])
 		case 'l':
 			Database_list(conn);
 			break;
+		case 'f':
+			Database_find(conn, argv[3]);
+			break;
 		default:
-			die("Invalid action, only: c=create, g=get, s=set, d=del, l=list", conn);
+			die("Invalid action, only: c=create, g=get, s=set, d=del, l=list, f=find", conn);
 	}
 
 	Database_close(conn);
