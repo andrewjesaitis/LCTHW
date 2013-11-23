@@ -3,10 +3,14 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+#include <assert.h>
 #include "ex19.h"
 
 int Monster_attack(void *self, int damage)
 {
+	assert(self);
+	assert(damage >= 0);
+
 	Monster *monster = self;
 
 	printf("You attack %s!\n", monster->_(description));
@@ -24,6 +28,8 @@ int Monster_attack(void *self, int damage)
 
 int Monster_init(void *self)
 {
+	assert(self);
+
 	Monster *monster = self;
 	monster->hit_points = 10;
 	return 1;
@@ -36,6 +42,8 @@ Object MonsterProto = {
 
 void *Room_move(void *self, Direction direction)
 {
+	assert(self);
+
 	Room *room = self;
 	Room *next = NULL;
 
@@ -63,7 +71,11 @@ void *Room_move(void *self, Direction direction)
 	return next;
 }
 
-int Room_attack(void *self, int damage) {
+int Room_attack(void *self, int damage)
+{
+	assert(self);
+	assert(damage >= 0);
+
 	Room *room = self;
 	Monster *monster = room->bad_guy;
 
@@ -83,6 +95,8 @@ Object RoomProto = {
 
 void *Map_move(void *self, Direction direction)
 {
+	assert(self);
+
 	Map *map = self;
 	Room *location = map->location;
 	Room *next = NULL;
@@ -98,6 +112,9 @@ void *Map_move(void *self, Direction direction)
 
 int Map_attack(void *self, int damage)
 {
+	assert(self);
+	assert(damage >= 0);
+
 	Map *map = self;
 	Room *location = map->location;
 
@@ -106,6 +123,8 @@ int Map_attack(void *self, int damage)
 
 int Map_init(void *self)
 {
+	assert(self);
+
 	Map *map = self;
 
 	// make some rooms for a small map
@@ -140,6 +159,8 @@ Object MapProto = {
 
 int process_input(Map *game)
 {
+	assert(game);
+
 	printf("\n> ");
 
 	char ch = getchar();
@@ -150,7 +171,7 @@ int process_input(Map *game)
 
 	switch(ch) {
 		case -1:
-			printf("Giving up. You suck.\n");
+			printf("Giving up? You suck.\n");
 			return 0;
 			break;
 
