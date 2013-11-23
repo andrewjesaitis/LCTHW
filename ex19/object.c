@@ -63,9 +63,15 @@ void *Object_new(size_t size, Object proto, char *description)
 	if(!proto.move) proto.move = Object_move;
 
 	Object *el = calloc(1, size);
+	if(!el){
+		return NULL;
+	}
 	*el = proto;
 
 	el->description = strdup(description);
+	if(!el->description){
+		return NULL;
+	}
 
 	if(!el->init(el)) {
 		el->destroy(el);
